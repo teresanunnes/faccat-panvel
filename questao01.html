@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        main .conteudo {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        main .resultado {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="conteudo">
+            <label for="frase">Digite uma frase:</label>
+            <input name="frase" type="text" />
+
+            <label for="rotacao">Digite um número para a rotação:</label>
+            <input name="rotacao" type="number" value="0" />
+
+            <button>Criptografar</button>
+        </div>
+        <div class="resultado"></div>
+    </main>
+    
+    <script>
+        const inputFrase = document.querySelector("input[name='frase']");
+        const inputRotacao = document.querySelector("input[name='rotacao']");
+
+        const button = document.querySelector("button");
+        const resultado = document.querySelector(".resultado");
+
+        let alfabeto = 'abcdefghijklmnopqrstuvwxyz';
+
+        function cryptoFrase(entrada, rotacao) {
+            let fraseSemAcento = entrada.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            let fraseCriptografada = fraseSemAcento.split('').map(item => {
+                let maiuscula = /[A-Z]/.test(item);
+                let letraMinuscula = item.toLowerCase(); 
+
+                if (alfabeto.includes(letraMinuscula)) {
+                    let posicao = alfabeto.indexOf(letraMinuscula);
+                    let comprimentoAlfabeto = alfabeto.length;
+
+                    if (((posicao + rotacao) + 1) > comprimentoAlfabeto) {
+                        let diferencaPosicoes = (posicao + rotacao) - comprimentoAlfabeto;
+
+                        if (maiuscula) {
+                            return alfabeto[diferencaPosicoes].toUpperCase();
+                        }
+
+                        return alfabeto[diferencaPosicoes];
+                    }
+
+                    if (maiuscula) {
+                        return alfabeto[posicao + rotacao].toUpperCase();
+                    }
+
+                    return alfabeto[posicao + rotacao]; 
+                } 
+
+                return item;
+            });
+
+            return fraseCriptografada.join('');
+        }
+
+        button.addEventListener("click", function(e) {
+            if (inputFrase.value !== "") {
+                resultado.innerHTML = cryptoFrase(inputFrase.value, parseInt(inputRotacao.value));
+            }
+        });
+    </script>
+</body>
+</html>

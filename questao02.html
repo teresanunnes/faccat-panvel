@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrida</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        main .conteudo {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        main .resultado {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="conteudo">
+            <label for="rex">Digite a posição do Rex:</label>
+            <input name="rex" type="number" />
+            
+            <label for="bob">Digite a posição do Bob:</label>
+            <input name="bob" type="number" />
+            
+            <label for="oli">Digite a posição do Oli:</label>
+            <input name="oli" type="number" />
+
+            <button>Revelar ganhador</button>
+        </div>
+        <div class="resultado"></div>
+    </main>
+    
+    <script>
+        const inputRex = document.querySelector("input[name='rex']");
+        const inputBob = document.querySelector("input[name='bob']");
+        const inputOli = document.querySelector("input[name='oli']");
+
+        const button = document.querySelector("button");
+        const resultado = document.querySelector(".resultado");
+
+        function retornarGanhador(rex, bob, oli) {
+            let diferencaRex;
+            let diferencaBob;
+
+            if (rex < oli) {
+                diferencaRex = oli - rex;
+            } else {
+                diferencaRex = rex - oli;
+            }
+
+            if (bob < oli) {
+                diferencaBob = oli - bob;
+            } else {
+                diferencaBob = bob - oli;
+            }
+
+            if (diferencaBob > diferencaRex) {
+                return 'Rex';
+            } else if (diferencaBob < diferencaRex) {
+                return 'Bob';
+            } else {
+                return 'Oli';
+            }
+        }
+
+        button.addEventListener("click", function(e) {
+            resultado.innerHTML = retornarGanhador(
+                parseInt(inputRex.value),
+                parseInt(inputBob.value),
+                parseInt(inputOli.value),
+            );
+        });
+    </script>
+</body>
+</html>
