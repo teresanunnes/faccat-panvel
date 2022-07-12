@@ -71,6 +71,10 @@
                     if (((posicao + rotacao) + 1) > comprimentoAlfabeto) {
                         let diferencaPosicoes = (posicao + rotacao) - comprimentoAlfabeto;
 
+                        if (diferencaPosicoes > 26) {
+                            diferencaPosicoes = diferencaPosicoes % 26;
+                        }
+
                         if (maiuscula) {
                             return alfabeto[diferencaPosicoes].toUpperCase();
                         }
