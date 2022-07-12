@@ -41,7 +41,7 @@
             <input name="frase" type="text" />
 
             <label for="rotacao">Digite um número para a rotação:</label>
-            <input name="rotacao" type="number" value="0" />
+            <input name="rotacao" type="number" value="1" min="1" />
 
             <button>Criptografar</button>
         </div>
@@ -57,7 +57,7 @@
 
         let alfabeto = 'abcdefghijklmnopqrstuvwxyz';
 
-        function cryptoFrase(entrada, rotacao) {
+        function teste(entrada, rotacao) {
             let fraseSemAcento = entrada.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             
             let fraseCriptografada = fraseSemAcento.split('').map(item => {
@@ -97,7 +97,13 @@
 
         button.addEventListener("click", function(e) {
             if (inputFrase.value !== "") {
-                resultado.innerHTML = cryptoFrase(inputFrase.value, parseInt(inputRotacao.value));
+                let valorRotacao = parseInt(inputRotacao.value);
+                
+                if (valorRotacao < 1) {
+                    valorRotacao = 1;
+                }
+
+                resultado.innerHTML = teste(inputFrase.value, valorRotacao);
             }
         });
     </script>
